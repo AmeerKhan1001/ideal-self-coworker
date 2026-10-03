@@ -1,0 +1,27 @@
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Common temporary output
+*.tmp
+*.log
+
+# Python / JS caches if tooling is added later
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+
+# Local-only coworker material
+*.private.md
+*.local.md
+workspace/private/
