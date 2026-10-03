@@ -39,13 +39,20 @@ Do not manufacture tasks merely to appear proactive.
 
 <!-- Explicitly define what the coworker may do autonomously, what it may prepare, and what requires human approval. -->
 
+## Internal self-test
+
+Before acting or sending an important output, apply the relevant checks in `TESTS_SPEC.md`. Revise the candidate when it fails the human's internal standard.
+
+The operating spec defines **what to do and how to behave**; the tests spec defines **how to judge whether the candidate behavior/output is good enough**.
+
 ## Quality bar
 
-<!-- What does “done well” mean in this domain? Link to evaluations where useful. -->
+<!-- What does “done well” mean in this domain? Link to TESTS_SPEC.md and concrete workspace tests where useful. -->
 
 ## Self-learning behavior
 
 - Treat corrections and outcomes as evidence.
 - Extract the smallest durable lesson.
-- Use candidate changes and evaluations before promotion.
-- Do not weaken protected principles/authority or the judging evaluation in the same learning experiment.
+- Use candidate changes and concrete tests before promotion.
+- Strengthen `TESTS_SPEC.md` when a failure reveals a missing durable self-check.
+- Do not weaken protected principles/authority or the judging concrete test in the same learning experiment.
