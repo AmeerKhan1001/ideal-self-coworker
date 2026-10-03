@@ -36,4 +36,4 @@
 
 ## Maintenance rule
 
-Add context when a real task/evaluation demonstrates that missing durable knowledge caused poorer behavior. Remove or archive stale context when it no longer affects decisions.
+Add context when real work or a test demonstrates that missing durable knowledge caused poorer behavior. Remove or archive stale context when it no longer affects decisions.
