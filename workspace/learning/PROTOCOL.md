@@ -6,7 +6,7 @@ The goal is not continuous uncontrolled rewriting. The goal is **bounded, eviden
 
 ## Trigger
 
-Start a learning cycle only when real work or an evaluation provides plausible durable evidence:
+Start a learning cycle only when real work or a test provides plausible durable evidence:
 
 - a human correction,
 - a repeated failure,
@@ -18,9 +18,11 @@ If there is no durable lesson, return to work.
 
 ## Step 1 — Establish the baseline
 
-Identify the relevant current evaluation(s) and baseline result before changing the Human Model.
+Identify the relevant current concrete test(s) in `workspace/tests/` and the baseline result before changing the Human Model.
 
-Do not rewrite the judging evaluation to make the candidate easier to pass.
+Also identify the relevant internal checks in `human-model/TESTS_SPEC.md`.
+
+Do not rewrite the judging concrete test to make the candidate easier to pass.
 
 ## Step 2 — Extract the smallest lesson
 
@@ -28,10 +30,11 @@ Classify the candidate as one of:
 
 - context,
 - operating specification,
+- tests specification,
 - workflow,
 - history,
 - reusable learning,
-- proposed new evaluation.
+- proposed new concrete test.
 
 Do not redesign unrelated files.
 
@@ -44,14 +47,16 @@ Do not redesign unrelated files.
 - permission/authority boundaries,
 - privacy/security rules,
 - consequential approval policies,
-- removing or materially weakening existing regression/hard-gate evaluations.
+- protected internal tests,
+- removing or materially weakening existing regression/hard-gate tests.
 
-### Potentially autonomous after evaluation
+### Potentially autonomous after tests
 
 Subject to the domain's risk level:
 
 - context,
 - operating guidance,
+- non-protected internal test refinements,
 - workflows,
 - history,
 - learnings.
@@ -67,10 +72,10 @@ Record:
 - evidence,
 - expected improvement,
 - files changed,
-- relevant evaluations,
+- relevant tests,
 - time/cost budget.
 
-## Step 5 — Run targeted evaluations
+## Step 5 — Run targeted tests
 
 Test the exact failure/outcome the candidate is meant to improve.
 
@@ -78,9 +83,9 @@ If a hard gate fails, reject the candidate.
 
 ## Step 6 — Run regressions
 
-Run relevant existing regression/scenario evaluations to detect collateral damage.
+Run relevant existing regression/scenario tests to detect collateral damage.
 
-Do not require every possible evaluation for every low-risk change; route to the smallest sufficient regression set.
+Do not require every possible test for every low-risk change; route to the smallest sufficient regression set.
 
 ## Step 7 — Compare
 
@@ -91,7 +96,7 @@ A candidate may be promoted only when:
 - required hard gates pass,
 - the target problem materially improves,
 - there is no unacceptable regression,
-- protected principles/authority remain intact.
+- protected principles, internal tests, and authority remain intact.
 
 ## Step 8 — Keep, revert, or defer
 
@@ -109,10 +114,12 @@ Do not let self-improvement consume the majority of the coworker's useful workin
 
 Use bounded improvement cycles. Real work produces the evidence that makes future learning meaningful.
 
-## Evaluator integrity
+## Test integrity
 
-The coworker may propose a new evaluation when a failure reveals a missing test. Add/strengthen it as a separate change. Do not allow the current candidate to delete or weaken the test that judges it.
+The coworker may propose a new test when a failure reveals a missing case. Add or strengthen it as a separate change. Do not allow the current candidate to delete or weaken the concrete test that judges it.
+
+If the failure reveals that the *human's own internal judgment model* was incomplete, propose a corresponding change to `human-model/TESTS_SPEC.md` as well.
 
 ## Learning from success
 
-Failures are not the only source of learning. If a successful approach is clearly reusable, encode it as a candidate workflow/operating improvement and evaluate whether it generalizes.
+Failures are not the only source of learning. If a successful approach is clearly reusable, encode it as a candidate workflow/operating/tests-spec improvement and test whether it generalizes.
