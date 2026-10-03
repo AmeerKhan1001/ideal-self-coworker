@@ -10,10 +10,11 @@ Your highest-value responsibilities are:
 
 1. Define what “better” means.
 2. Set principles and permission boundaries.
-3. Give truthful corrections and feedback during real work.
-4. Define or approve evaluations for important outcomes.
-5. Retain authority over consequential decisions you have not delegated.
-6. Review proposed changes to protected principles, permissions, security/privacy rules, and evaluation quality bars.
+3. Define the important internal checks in `human-model/TESTS_SPEC.md`.
+4. Give truthful corrections and feedback during real work.
+5. Define or approve concrete tests for important outcomes.
+6. Retain authority over consequential decisions you have not delegated.
+7. Review proposed changes to protected principles, permissions, security/privacy rules, test standards, and hard regression tests.
 
 The coworker should handle much of the mechanical extraction, candidate-learning, testing, and maintenance below that layer.
 
@@ -26,9 +27,10 @@ Choose one recurring outcome you can judge well. Examples:
 - solve a normal bug end-to-end,
 - produce a useful daily brief,
 - assess a financial decision,
+- communicate clearly with a coworker,
 - evaluate a business opportunity.
 
-Document enough context and operating behavior to do that one thing well. Add more only when real failures show what is missing.
+Document enough context, operating behavior, and internal tests to do that one thing well. Add more only when real failures show what is missing.
 
 ## Define the ideal carefully
 
@@ -39,10 +41,23 @@ Use this priority order when there is conflict:
 1. protected values/principles,
 2. desired outcomes and obligations,
 3. evidence/current reality,
-4. operating standards/workflows,
+4. operating standards/workflows/tests,
 5. current habits/preferences.
 
 A bad habit should not become a permanent rule simply because it is common.
+
+## Tests are part of the human model too
+
+Humans continuously test their own candidate actions and outputs.
+
+Example: you draft a Teams message, notice that it is too abrupt, revise it, mentally check it again, and then send it. The durable judgment behind that self-correction belongs in `human-model/TESTS_SPEC.md`.
+
+The specific case used to verify that the digital coworker can do the same thing belongs in `workspace/tests/`.
+
+So:
+
+- **Tests spec = internal judgment.**
+- **Tests folder = concrete test cases.**
 
 ## Give corrections naturally
 
@@ -50,19 +65,20 @@ During work, correct the coworker normally:
 
 - “That repository is not authoritative; this one is.”
 - “This needs approval before deployment.”
+- “That message sounds too harsh; rewrite it.”
 - “That brief includes too much low-value detail.”
 - “We assumed demand; we did not validate it.”
 
-A capable learning loop should determine whether the correction is one-off or durable, propose the smallest model change, and test it.
+A capable learning loop should determine whether the correction is one-off or durable, propose the smallest Human Model/test change, and test it.
 
 ## Protect the judge
 
 Do not let the same optimization step freely rewrite both:
 
 - the Human Model candidate, and
-- the evaluations used to declare that candidate better.
+- the concrete tests used to declare that candidate better.
 
-New evaluations are welcome. Weakening/removing meaningful existing evaluations should be reviewed separately.
+New tests are welcome. Weakening/removing meaningful existing regression tests should be reviewed separately.
 
 ## Decide what can self-update
 
@@ -75,13 +91,15 @@ A reasonable starting policy:
 - authority and permission boundaries,
 - privacy/security constraints,
 - consequential financial or operational authority,
+- protected sections of `TESTS_SPEC.md`,
 - removal/weakening of regression tests.
 
-### Evaluation-gated updates may be allowed
+### Test-gated updates may be allowed
 
 - context,
 - workflows,
 - operating guidance,
+- non-protected test refinements,
 - history,
 - reusable learnings.
 
@@ -97,6 +115,6 @@ Do not commit credentials, API keys, private keys, regulated personal data, empl
 
 Use this maintenance rule:
 
-> Problem → smallest model/workspace change → evaluate → stop.
+> Problem → smallest model/workspace change → test → stop.
 
-If the current architecture passes its real evaluations, use it. Let actual failures define the next change.
+If the current architecture passes its real tests, use it. Let actual failures define the next change.
