@@ -1,50 +1,93 @@
 # Ideal Self Coworker
 
-**A digital coworker modeled on your best version — with portable context, explicit workflows, evaluations, and a self-learning loop.**
+**A digital coworker modeled on your best version — with portable context, explicit workflows, tests, and a self-learning loop.**
 
 Ideal Self Coworker is an open-source, model-agnostic architecture for building a digital coworker around an interpretable model of the human it serves.
 
-It is not trying to clone every current habit. It is trying to help an AI operate according to the human's **best defined standard**: their real context, durable knowledge, principles, operating expectations, workflows, history, and learnings.
+It is not trying to clone every current habit. It is trying to help an AI operate according to the human's **best defined standard**: their real context, principles, operating expectations, internal judgment, workflows, history, and learnings.
 
-The project has two architectural halves:
+## Architecture
 
 ```text
 ideal-self-coworker/
 ├── AGENTS.md
 ├── HUMANS.md
 ├── human-model/
+│   ├── CONTEXT.md
+│   ├── PRINCIPLES.md
+│   ├── OPERATING_SPEC.md
+│   ├── TESTS_SPEC.md
+│   ├── WORKFLOWS/
+│   ├── HISTORY.md
+│   └── LEARNINGS.md
 └── workspace/
+    ├── tests/
+    ├── episodes/
+    ├── learning/
+    ├── artifacts/
+    └── outputs/
 ```
 
-- **`human-model/`** — durable intelligence: what the ideal version of the human should know and how it should operate.
-- **`workspace/`** — workbench: evaluations, episodes, learning experiments, artifacts, and outputs.
-- **`AGENTS.md`** — instructions for AI agents using the repository.
-- **`HUMANS.md`** — instructions for the human who owns and shapes the coworker.
+The project has two architectural halves:
 
-Project packaging such as this README, the license, and `.github/` community files is not a third architectural layer.
+- **`human-model/`** — durable intelligence: what the ideal version of the human should know, how it should operate, and how it should judge its own outputs/actions.
+- **`workspace/`** — workbench: concrete tests, real-work episodes, learning experiments, artifacts, and outputs.
+
+`AGENTS.md`, `HUMANS.md`, README, license, and `.github/` files are project instructions/packaging rather than a third architectural layer.
+
+## The key distinction: tests spec vs. tests
+
+Humans continuously test their own candidate actions.
+
+You may draft a Teams message, realize it sounds unnecessarily harsh, revise it, check it again, and only then send it. The durable judgment that caused that correction is part of the human being modeled.
+
+Therefore:
+
+> **`human-model/TESTS_SPEC.md` = internal judgment.**  
+> **`workspace/tests/` = concrete cases that verify that judgment.**
+
+Example:
+
+```text
+Human Model:
+Before sending an important message, check truthfulness,
+clarity, tone, context, and unnecessary pressure.
+
+Workspace test:
+Given this blunt Teams follow-up, notice the tone problem
+and revise it appropriately.
+```
+
+This keeps the *ability to judge* inside the Human Model while keeping individual regression/scenario cases in the workspace.
 
 ## Why this exists
 
-General AI can already reason, write, search, code, and use tools. What it usually lacks is the durable, inspectable context required to operate well **for a particular human in a particular domain**.
+General AI can already reason, write, search, code, and use tools. What it usually lacks is the durable, inspectable context and judgment required to operate well **for a particular human in a particular domain**.
 
 The working hypothesis is:
 
-> Better general intelligence + the right human model + explicit workflows + protected evaluations can produce a coworker that becomes more useful without requiring the human to repeatedly re-explain themselves.
+> Better general intelligence + the right Human Model + explicit workflows + strong tests can produce a coworker that becomes more useful without requiring the human to repeatedly re-explain themselves.
 
-The human should not have to manually maintain every context file after every interaction. Real work should generate experience; experience should generate candidate learnings; candidate changes should be evaluated before they are promoted into the durable human model.
+The human should not have to manually maintain every context file after every interaction. Real work should generate experience; experience should generate candidate learnings; candidate changes should be tested before they are promoted into the durable Human Model.
 
 ## Core loop
 
 ```text
 Real work
    ↓
-Episode / outcome / human correction
+Candidate output/action
+   ↓
+Internal tests from TESTS_SPEC.md
+   ↓
+Act / send
+   ↓
+Outcome / human correction / episode
    ↓
 Candidate learning
    ↓
 Small Human Model change
    ↓
-Protected evaluations
+Concrete workspace tests + regressions
    ↓
 ┌───────────────┐
 │ Better?       │
@@ -56,84 +99,103 @@ Protected evaluations
 Continue working
 ```
 
-The coworker may propose stronger evaluations, but it must not weaken or silently rewrite the tests used to judge the same change.
+The coworker may propose stronger tests, but it must not weaken or silently rewrite the concrete test used to judge the same candidate change.
+
+## Human Model
+
+### `CONTEXT.md`
+
+Durable facts, responsibilities, relationships, systems, constraints, goals, and domain knowledge the coworker cannot safely infer.
+
+### `PRINCIPLES.md`
+
+Human-owned standards defining what “better” means. These are protected from autonomous weakening.
+
+### `OPERATING_SPEC.md`
+
+How the coworker should reason, communicate, prioritize, act, escalate, and handle uncertainty.
+
+### `TESTS_SPEC.md`
+
+How the ideal human internally tests whether a candidate output, decision, or action is good enough.
+
+Typical internal checks include:
+
+- truth/evidence,
+- outcome fit,
+- tone and communication,
+- important constraints/trade-offs,
+- principles and authority,
+- completeness and quality.
+
+### `WORKFLOWS/`
+
+Repeatable procedures for recurring outcomes.
+
+Examples:
+
+- Work: feature development, bug solving, investigation, PR review, deployment.
+- Personal: daily brief, financial decision support, travel planning.
+- Business: opportunity assessment, customer research, experiments, proposals.
+
+### `HISTORY.md`
+
+Past events and decisions that materially explain the present. Not a diary.
+
+### `LEARNINGS.md`
+
+Reusable lessons extracted from experience that should change future behavior.
+
+## Workspace
+
+### `tests/`
+
+Concrete scenario, regression, comparison, hard-gate, and outcome tests.
+
+### `episodes/`
+
+Compact records of meaningful work experiences, corrections, surprises, failures, and reusable successes.
+
+### `learning/`
+
+The candidate-change → test → keep/revert protocol.
+
+### `artifacts/`
+
+Intermediate work that has no better authoritative home.
+
+### `outputs/`
+
+Human-facing results that need a local home. Prefer natural destinations such as code hosts, ticketing systems, email, document systems, CRMs, or deployment systems when appropriate.
 
 ## Design principles
 
-1. **Human-defined ideal, not behavioral cloning.** “Best” is defined by the human's principles, desired outcomes, authority boundaries, and evaluations — not inferred from every past behavior.
-2. **Durable vs. transient separation.** Stable knowledge lives in `human-model/`; current work lives in `workspace/` or its natural external system.
-3. **Interpretable by default.** Important operating knowledge should be readable and auditable as ordinary files.
-4. **Retrieve live data from its source.** Do not copy changing facts into the human model when an authoritative system can provide them.
-5. **Evaluation before promotion.** Self-learning changes are candidates until they pass relevant regression checks.
-6. **Protected principles and authority.** Self-improvement must not optimize away ethics, permissions, privacy, security, or human approval boundaries.
-7. **Smallest useful change.** Fix the demonstrated failure; do not redesign the entire repository because a new taxonomy looks cleaner.
-8. **Model/runtime independence.** The architecture should survive changes in LLM providers, agents, and interfaces.
-9. **One source of truth per fact.** Avoid duplicated context and competing versions.
-10. **Human agency remains explicit.** The coworker assists and can become highly proactive, but consequential authority is granted rather than assumed.
-
-## Structure
-
-### Human model
-
-```text
-human-model/
-├── README.md
-├── CONTEXT.md
-├── PRINCIPLES.md
-├── OPERATING_SPEC.md
-├── WORKFLOWS/
-│   ├── README.md
-│   └── TEMPLATE.md
-├── HISTORY.md
-└── LEARNINGS.md
-```
-
-| File | Purpose |
-|---|---|
-| `CONTEXT.md` | Durable facts, responsibilities, relationships, systems, constraints, goals, and domain knowledge the coworker cannot safely infer. |
-| `PRINCIPLES.md` | Human-owned standards that define what “better” means. Protected from autonomous weakening. |
-| `OPERATING_SPEC.md` | How the coworker should reason, communicate, prioritize, act, escalate, and handle uncertainty. |
-| `WORKFLOWS/` | Repeatable procedures for recurring outcomes. |
-| `HISTORY.md` | Past events and decisions that materially explain the present. Not a diary. |
-| `LEARNINGS.md` | Reusable lessons that should change future behavior. |
-
-### Workspace
-
-```text
-workspace/
-├── README.md
-├── evaluations/
-│   ├── README.md
-│   └── TEMPLATE.md
-├── episodes/
-│   ├── README.md
-│   └── TEMPLATE.md
-├── learning/
-│   ├── PROTOCOL.md
-│   └── results.tsv
-├── artifacts/
-│   └── README.md
-└── outputs/
-    └── README.md
-```
-
-| Area | Purpose |
-|---|---|
-| `evaluations/` | Protected quality bar: scenario tests, hard gates, regression cases, and outcome criteria. |
-| `episodes/` | Compact records of meaningful work experiences, corrections, surprises, and outcomes. |
-| `learning/` | The candidate-change → evaluate → keep/revert protocol. |
-| `artifacts/` | Intermediate work that has no better authoritative home. |
-| `outputs/` | Human-facing results that need a local home; otherwise outputs should go directly to their natural destination. |
+1. **Human-defined ideal, not behavioral cloning.** “Best” is defined by principles, desired outcomes, authority boundaries, internal tests, and real-world evidence — not every past behavior.
+2. **Durable vs. transient separation.** Stable knowledge/judgment lives in `human-model/`; current work lives in `workspace/` or an authoritative external system.
+3. **Interpretable by default.** Important operating knowledge should remain readable and auditable as ordinary files.
+4. **Retrieve live data from its source.** Do not copy changing facts into the Human Model when an authoritative system can provide them.
+5. **Test before promotion.** Self-learning changes remain candidates until relevant targeted/regression tests pass.
+6. **Protected principles and authority.** Self-improvement must not optimize away ethics, permissions, privacy, security, or human-approval boundaries.
+7. **Protect the judge.** A candidate change must not weaken the concrete test judging that same change.
+8. **Smallest useful change.** Fix the demonstrated failure; do not redesign the entire repo because a new taxonomy looks cleaner.
+9. **Model/runtime independence.** The architecture should survive changes in model providers, agents, and interfaces.
+10. **Human agency remains explicit.** Consequential authority is granted rather than assumed.
 
 ## Quick start
 
 ### 1. Create a private instance
 
-This public repository is a framework/template. A real human model can contain highly sensitive information. Prefer creating a **private repository** for your actual coworker unless you intentionally want the contents public.
+This public repository is a framework/template. A real Human Model can contain highly sensitive information. Prefer a **private repository** for your actual coworker unless you intentionally want the contents public.
 
-### 2. Define your ideal
+### 2. Define the ideal
 
-Start with `human-model/PRINCIPLES.md`. Write only principles you genuinely want the coworker to preserve. Define permission and approval boundaries in `OPERATING_SPEC.md`.
+Start with:
+
+- `human-model/PRINCIPLES.md`
+- `human-model/OPERATING_SPEC.md`
+- `human-model/TESTS_SPEC.md`
+
+Define what matters, how the coworker should operate, how the ideal human would judge candidate outputs/actions, and what authority is granted.
 
 ### 3. Add only useful context
 
@@ -141,11 +203,11 @@ Populate `CONTEXT.md` with durable information that materially changes decisions
 
 ### 4. Pick one proven workflow
 
-Choose one recurring outcome you already understand — for example bug solving, a daily brief, financial decision support, client research, or proposal development — and instantiate `human-model/WORKFLOWS/TEMPLATE.md`.
+Use `human-model/WORKFLOWS/TEMPLATE.md` for one recurring outcome you already understand.
 
-### 5. Write evaluations before self-learning
+### 5. Add concrete tests
 
-Use `workspace/evaluations/TEMPLATE.md` to define what good performance looks like. Include hard failure gates where appropriate.
+Use `workspace/tests/TEMPLATE.md` to create representative tests, especially for high-value or previously failed scenarios.
 
 ### 6. Work normally
 
@@ -153,21 +215,13 @@ Let the coworker do real work. Meaningful corrections, surprises, and outcomes b
 
 ### 7. Learn conservatively
 
-Follow `workspace/learning/PROTOCOL.md`: extract the smallest candidate model change, run targeted and regression evaluations, keep improvements, and revert regressions.
+Follow `workspace/learning/PROTOCOL.md`: extract the smallest candidate Human Model change, run targeted/regression tests, keep improvements, and revert regressions.
 
 ## Using this across domains
 
 The architecture is domain-general. The content is not.
 
-Examples:
-
-- **Work:** context + workflows may dominate: feature development, bug solving, investigation, PR review, deployment.
-- **Personal:** context + operating spec may dominate: responsibilities, planning, daily briefs, financial decision support.
-- **Business:** history + learnings + evidence discipline may dominate: opportunity assessment, experiments, offers, customer feedback.
-
-### Recommended trust-boundary rule
-
-Use one repository per **trust/confidentiality boundary**, not necessarily one repository per life category.
+A recommended rule is **one repository per trust/confidentiality boundary** rather than necessarily one repo per life category.
 
 For example:
 
@@ -177,7 +231,7 @@ work-ideal-self-coworker/
 ├── human-model/
 └── workspace/
 
-# Personal environment (if appropriate)
+# Personal environment, if appropriate
 personal-ideal-self-coworker/
 ├── human-model/
 │   ├── personal/
@@ -191,57 +245,45 @@ If personal and business information require different privacy boundaries, split
 
 ## What belongs where?
 
-A useful test:
+Useful tests:
 
-- **“Would this still matter months from now?”** → probably `human-model/`.
-- **“Is this about today's task/run?”** → probably `workspace/` or an external system.
-- **“Can it be fetched live from an authoritative source?”** → keep it there; store only the routing/interpretation needed to use it.
-- **“Is this a rule for producing an artifact?”** → human model/workflow.
-- **“Is this the artifact produced for a specific case?”** → workspace or natural destination.
+- **Would this durable knowledge/judgment still matter months from now?** → probably `human-model/`.
+- **Is this about today's task/run or one concrete test scenario?** → probably `workspace/`.
+- **Can it be fetched live from an authoritative source?** → keep it there; store only the routing/interpretation required to use it well.
+- **Is this a rule for producing/judging an artifact?** → Human Model.
+- **Is this the artifact/test instance itself?** → Workspace or natural external destination.
 
 Example:
 
 ```text
-How to produce QA cases        → human-model/WORKFLOWS/
-QA cases for ticket ABC-123    → workspace/ or ticketing system
-
-How to assess an opportunity   → human-model/WORKFLOWS/
-Research for one opportunity   → workspace/artifacts/ or research system
+How to produce QA cases          → human-model/WORKFLOWS/
+How to judge whether QA is good  → human-model/TESTS_SPEC.md
+QA cases for ticket ABC-123      → workspace/ or ticketing system
+Regression case for bad QA       → workspace/tests/
 ```
 
 ## Self-learning safety model
 
-Not all files have equal write authority.
-
 ### Human approval required by default
 
-- `PRINCIPLES.md`
-- permission and authority boundaries
-- privacy/security rules
-- consequential-action policies
-- evaluation removals or material weakening
+- `PRINCIPLES.md`,
+- ethics,
+- authority/permission boundaries,
+- privacy/security rules,
+- consequential-action policies,
+- protected portions of `TESTS_SPEC.md`,
+- removal/material weakening of hard/regression tests.
 
-### Eligible for evaluation-gated learning
+### Test-gated updates may be allowed
 
 Depending on the domain and risk level:
 
-- `CONTEXT.md`
-- `OPERATING_SPEC.md`
-- `WORKFLOWS/`
-- `HISTORY.md`
-- `LEARNINGS.md`
-
-A candidate still must pass relevant evaluations and must not contradict protected constraints.
-
-## Evaluation model
-
-Do not reduce all human work to one arbitrary score. Prefer:
-
-1. **Hard gates** — conditions that must never fail: correct source, no fabricated facts, required approvals, security/privacy boundaries, tests passing where applicable.
-2. **Scenario evaluations** — representative cases with expected behavior.
-3. **Regression evaluations** — previously solved failures that must stay solved.
-4. **Quality comparisons** — correctness, completeness, clarity, maintainability, intervention required, beneficial proactiveness.
-5. **Real-world outcomes** — when available, observed results outrank synthetic confidence.
+- `CONTEXT.md`,
+- `OPERATING_SPEC.md`,
+- non-protected `TESTS_SPEC.md` refinements,
+- `WORKFLOWS/`,
+- `HISTORY.md`,
+- `LEARNINGS.md`.
 
 ## Proactivity
 
@@ -256,6 +298,10 @@ Understand current state + Human Model
         ↓
 Is there a beneficial action?
         ↓
+Prepare candidate
+        ↓
+Run relevant internal tests
+        ↓
 Act or surface it within authority
         ↓
 Verify outcome
@@ -269,7 +315,7 @@ The goal is not activity for its own sake. A proactive action should have a clea
 
 ## Stepping stones and acknowledgements
 
-Ideal Self Coworker synthesizes and extends ideas from two major stepping stones:
+Ideal Self Coworker synthesizes and extends ideas from two major stepping stones.
 
 ### Interpretable Context Methodology (ICM) — Jake Van Clief / Clief Notes
 
@@ -280,7 +326,7 @@ ICM demonstrates how ordinary folders and readable files can route AI to the rig
 
 ### `autoresearch` — Andrej Karpathy
 
-`autoresearch` demonstrates a constrained autonomous improvement loop: keep the evaluator stable, expose a bounded mutable surface, run repeated experiments, measure, retain improvements, and discard regressions. Ideal Self Coworker generalizes that pattern from model-training research to an interpretable human-model/workspace architecture.
+`autoresearch` demonstrates a constrained autonomous improvement loop: keep the judge stable, expose a bounded mutable surface, run repeated experiments, measure, retain improvements, and discard regressions. Ideal Self Coworker generalizes that pattern from model-training research to an interpretable Human Model / Workspace architecture.
 
 - https://github.com/karpathy/autoresearch
 
@@ -294,7 +340,7 @@ This project is an independent synthesis and is not affiliated with or endorsed 
 - Not a mandate to automate every workflow.
 - Not a generic memory dump.
 - Not tied to one model provider, IDE, agent, or SaaS platform.
-- Not permission for an agent to alter its own ethics, authority, or evaluator until it passes.
+- Not permission for an agent to alter its own ethics, authority, or tests until it passes.
 
 ## Project status
 
@@ -306,8 +352,9 @@ This project is an independent synthesis and is not affiliated with or endorsed 
 
 - [x] Human Model / Workspace separation
 - [x] Human and agent operating guides
-- [x] Workflow, evaluation, and episode templates
-- [x] Evaluation-gated learning protocol
+- [x] Human `TESTS_SPEC.md` + concrete workspace test model
+- [x] Workflow, test, and episode templates
+- [x] Test-gated learning protocol
 - [x] Domain adaptation guidance
 
 ### v0.2 — Reference implementations
@@ -315,26 +362,19 @@ This project is an independent synthesis and is not affiliated with or endorsed 
 - [ ] Work-domain example using a fictional software-engineering environment
 - [ ] Personal-domain example using synthetic/non-sensitive data
 - [ ] Business-domain example showing fact → hypothesis → experiment → learning
-- [ ] Example evaluation runner independent of model provider
+- [ ] Example test runner independent of model provider
 
 ### v0.3 — Self-learning harness
 
 - [ ] Machine-readable candidate-change format
-- [ ] Evaluation runner / regression report
+- [ ] Test runner / regression report
 - [ ] Protected-file policy enforcement
 - [ ] Branch-based keep/revert learning loop
 - [ ] Cost/time budgets for improvement experiments
 
 ## Contributing
 
-Contributions are welcome, especially:
-
-- clearer domain examples,
-- evaluation patterns,
-- privacy/security improvements,
-- self-learning safeguards,
-- empirical reports of what does and does not work,
-- minimal tooling that preserves the filesystem-first design.
+Contributions are welcome, especially clearer domain examples, test patterns, privacy/security improvements, self-learning safeguards, empirical results, and minimal tooling that preserves the filesystem-first design.
 
 See [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md).
 
