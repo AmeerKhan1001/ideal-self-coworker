@@ -13,7 +13,7 @@ Prefer compact, evidence-linked learnings rather than raw observations.
 - **Future behavior:**
 - **Confidence:** high / medium / low
 - **Scope:** where this applies and where it does not
-- **Evaluation / episode:** link if available
+- **Test / episode:** link if available
 
 ---
 
