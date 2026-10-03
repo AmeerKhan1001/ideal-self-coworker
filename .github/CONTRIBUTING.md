@@ -7,7 +7,7 @@ Thanks for helping improve Ideal Self Coworker.
 Good contributions improve one or more of:
 
 - clarity of the Human Model / Workspace separation,
-- evaluation quality,
+- test quality,
 - learning-loop safety,
 - privacy/security,
 - domain portability,
@@ -23,7 +23,7 @@ A structural change should improve at least one of:
 - retrieval,
 - correctness,
 - execution,
-- evaluation,
+- testing,
 - privacy/security,
 - maintenance cost.
 
@@ -32,7 +32,7 @@ A structural change should improve at least one of:
 1. Keep changes focused.
 2. Explain the problem and expected outcome.
 3. Update examples/templates when behavior changes.
-4. Add or update evaluations for behavioral changes where possible.
+4. Add or update tests for behavioral changes where possible.
 5. Do not include real personal, employer, client, credential, or other sensitive data.
 6. Preserve attribution for ideas/examples derived from external work.
 
@@ -46,4 +46,4 @@ A structural change should improve at least one of:
 
 ## Discussions and issues
 
-Use issues for reproducible problems, proposed experiments, or bounded feature requests. Broader conceptual discussion is welcome, but actionable proposals should eventually state a concrete problem and evaluation.
+Use issues for reproducible problems, proposed experiments, or bounded feature requests. Broader conceptual discussion is welcome, but actionable proposals should eventually state a concrete problem and a way to test whether the change is better.
