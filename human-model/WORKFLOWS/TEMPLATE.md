@@ -25,7 +25,13 @@ What information/resources are required? Prefer references to authoritative sour
 
 - If ... then ...
 
-## Quality gates
+## Internal tests
+
+Which checks from `../TESTS_SPEC.md` matter especially for this workflow?
+
+- [ ] ...
+
+## Quality / hard gates
 
 - [ ] ...
 
@@ -41,9 +47,9 @@ What is produced, and where should it go?
 
 How do we know the workflow is actually done?
 
-## Related evaluations
+## Related concrete tests
 
-- `workspace/evaluations/...`
+- `workspace/tests/...`
 
 ## Learnings / history
 
