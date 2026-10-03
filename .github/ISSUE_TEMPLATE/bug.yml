@@ -1,5 +1,5 @@
 name: Problem / regression
-description: Report a reproducible problem in the architecture, templates, or learning loop.
+description: Report a reproducible problem in the architecture, templates, tests, or learning loop.
 title: "[Problem]: "
 labels: []
 body:
@@ -20,7 +20,7 @@ body:
   - type: textarea
     id: reproduce
     attributes:
-      label: Minimal reproduction
+      label: Minimal reproduction / test case
       description: Use synthetic/non-sensitive examples where possible.
     validations:
       required: true
@@ -28,7 +28,7 @@ body:
     id: impact
     attributes:
       label: Impact
-      description: Correctness, retrieval, evaluation, privacy/security, maintenance, or other impact.
+      description: Correctness, retrieval, testing, privacy/security, maintenance, or other impact.
   - type: checkboxes
     id: sensitive
     attributes:
