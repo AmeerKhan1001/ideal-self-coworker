@@ -1,5 +1,5 @@
 name: Improvement / experiment
-description: Propose a bounded improvement with a way to evaluate it.
+description: Propose a bounded improvement with a way to test it.
 title: "[Idea]: "
 labels: []
 body:
@@ -18,10 +18,10 @@ body:
     validations:
       required: true
   - type: textarea
-    id: evaluation
+    id: test
     attributes:
       label: How would we know it is better?
-      description: Suggest an evaluation, observable outcome, or comparison.
+      description: Suggest a test, observable outcome, or comparison.
     validations:
       required: true
   - type: textarea
