@@ -1,0 +1,38 @@
+name: Improvement / experiment
+description: Propose a bounded improvement with a way to evaluate it.
+title: "[Idea]: "
+labels: []
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What concrete limitation or failure are you addressing?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful change.
+    validations:
+      required: true
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: How would we know it is better?
+      description: Suggest an evaluation, observable outcome, or comparison.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Trade-offs / risks
+      description: What could regress or become more complex?
+  - type: checkboxes
+    id: sensitive
+    attributes:
+      label: Privacy check
+      options:
+        - label: This issue contains no secrets or sensitive real-world Human Model data.
+          required: true
