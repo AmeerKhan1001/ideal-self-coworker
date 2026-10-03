@@ -2,6 +2,18 @@
 
 This file explains the human's role in an Ideal Self Coworker.
 
+## Foundational boundary
+
+> **Human Model models the inside of the human. Workspace models the human's interaction with the outside world.**
+
+Use this as the default boundary when deciding where something belongs.
+
+- The external thing itself does **not** belong in the Human Model.
+- The human's internal knowledge, memory, judgment, principles, skills, or learned understanding about that external thing **can** belong in the Human Model.
+- Current tasks, messages, tickets, documents, artifacts, concrete test cases, actions, and outcomes belong in the Workspace or their authoritative external system.
+
+Example: a repository is external, so the repository itself is not part of the Human Model. But the human's knowledge that a particular repository is authoritative can be part of `CONTEXT.md`.
+
 ## Your job is not to maintain every file
 
 A mature coworker should learn from normal work. You should not need to remember to update `CONTEXT.md` after every correction.
