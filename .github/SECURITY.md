@@ -14,7 +14,8 @@ This repository is primarily an architecture/template. Security concerns may inc
 
 - instructions that encourage secret leakage,
 - unsafe autonomous modification of permission boundaries,
-- evaluator manipulation that bypasses protected constraints,
+- manipulation or weakening of protected tests to bypass constraints,
+- unsafe autonomous changes to `TESTS_SPEC.md`,
 - path/routing designs that cause accidental disclosure across domains,
 - tooling contributed later to automate learning or execution.
 
