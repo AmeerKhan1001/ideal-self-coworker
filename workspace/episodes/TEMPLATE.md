@@ -16,8 +16,8 @@
 
 ## Candidate durable lesson
 
-- None / context / operating spec / workflow / history / learning / new evaluation
+- None / context / operating spec / tests spec / workflow / history / learning / new concrete test
 
 ## Evidence links
 
-<!-- Link to authoritative ticket, PR, output, evaluation, etc. rather than copying sensitive content where possible. -->
+<!-- Link to authoritative ticket, PR, output, test, etc. rather than copying sensitive content where possible. -->
